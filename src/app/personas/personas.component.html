@@ -1,0 +1,56 @@
+<div class="mx-auto" style="width: 200px;">
+  <button type="button" class="btn btn-success my-2" (click)="openModal(template)">Agregar Persona</button>
+</div>
+
+
+<table class="table table-bordered table-responsive">
+  <thead class="bg-dark text-white">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Idea</th>
+      <th scope="col">Documento</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let persona of personas; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{persona.nombre}}</td>
+      <td>{{persona.idea}}</td>
+      <td>{{persona.documento}}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-info" (click)="openModal(template,persona)">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarPersona(persona)">Eliminar</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{tituloModal}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" placeholder="Nombre: " [formControl]='nombre'>
+      <small *ngIf="nombre.errors?.required && mostrarError">Campo requerido</small><!-- se le indica que el campo es requerido y si no cumple mostrar error pasa a ser verdadero -->
+    </div>
+    <div class="form-group">
+      <label for="idea">Idea</label>
+      <input type="text" class="form-control" id="idea" placeholder="Idea: " [formControl]='idea'>
+      <small *ngIf="idea.errors?.required && mostrarError">Campo requerido</small>
+    </div>
+    <div class="form-group">
+      <label for="documento">Documento</label>
+      <input type="number" class="form-control" id="documento" placeholder="Documento: " [formControl]='documento'>
+      <small *ngIf="documento.errors?.required && mostrarError">Campo requerido</small>
+    </div>
+    <button type="button" class="btn btn-success my-2" (click)="actualizarPersona()">{{textoBoton}}</button>
+  </div>
+</ng-template>
